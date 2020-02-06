@@ -20,12 +20,24 @@ function [filtImage] = Apply_Image_Filter(IMF, filterType, inputIm)
       % to be significanly faster (only did a quick test though...)
       IMF.VPrintF('[IMF] Image guided filtering...');
 
-      if (nargin == 3)% guide image provided
-        IMF.filt = imguidedfilter(IMF.filt, inputIm, 'NeighborhoodSize', IMF.imGuideNhoodSize, ...
-          'DegreeOfSmoothing', IMF.imGuideSmoothValue);
-      else % guide image is image itself
-        IMF.filt = imguidedfilter(IMF.filt, IMF.filt, 'NeighborhoodSize', IMF.imGuideNhoodSize, ...
-          'DegreeOfSmoothing', IMF.imGuideSmoothValue);
+      if (IMF.imGuideSmoothValue == 0)% auto-smoothing
+
+        if (nargin == 3)% guide image provided
+          IMF.filt = imguidedfilter(IMF.filt, inputIm, 'NeighborhoodSize', IMF.imGuideNhoodSize);
+        else % guide image is image itself
+          IMF.filt = imguidedfilter(IMF.filt, 'NeighborhoodSize', IMF.imGuideNhoodSize);
+        end
+
+      else
+
+        if (nargin == 3)% guide image provided
+          IMF.filt = imguidedfilter(IMF.filt, inputIm, 'NeighborhoodSize', IMF.imGuideNhoodSize, ...
+            'DegreeOfSmoothing', IMF.imGuideSmoothValue);
+        else % guide image is image itself
+          IMF.filt = imguidedfilter(IMF.filt, 'NeighborhoodSize', IMF.imGuideNhoodSize, ...
+            'DegreeOfSmoothing', IMF.imGuideSmoothValue);
+        end
+
       end
 
       % ----------------------------------------------------------------------
