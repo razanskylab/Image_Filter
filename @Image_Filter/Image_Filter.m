@@ -14,20 +14,28 @@ classdef Image_Filter < BaseClass
     % default don't show histo for xy-plots
     showHisto = 0;
 
-    % general settings --------------------------------------------------------------
+    % general settings ---------------------------------------------------------
     % more detailed output to workspace...
     verboseOutput(1, 1) {mustBeNumericOrLogical} = false;
     % more figures...
     verbosePlotting(1, 1) {mustBeNumericOrLogical} = false;
 
-    % interpolation --------------------------------------------------------------
+    % interpolation ------------------------------------------------------------
     interpFactor = 2;
     interpMethod = 'linear';
     % can be 'linear' | 'nearest' | 'cubic' | 'spline' | 'makima'
 
-    % spot removal
+    % spot removal -------------------------------------------------------------
     spotLevels = 5;
     % higher values mean more aggresive spot removal
+
+    % image binarization -------------------------------------------------------
+    binMethod = 'adapt'; % gray multi or adapt
+    nThreshLevels = 5; % more levels = more pixels
+    threshSens = 0.5;
+
+    % wavelet transform --------------------------------------------------------
+    waveletLevels = [2:5];
 
     % localtonemap --------------------------------------------------------------
     ltmContrast = 0.1; % [0-1] Amount of local contrast enhancement applied
@@ -60,7 +68,7 @@ classdef Image_Filter < BaseClass
     imadGamme = 1;
     imadAuto = 1;
 
-    % Sharpen
+    % Sharpen ------------------------------------------------------------------
     % Standard deviation of the Gaussian lowpass filter
     sharpRadius(1, 1) double {mustBeNumeric, mustBeFinite} = 5;
     % Strength of the sharpening effect, typical range [0 2]
