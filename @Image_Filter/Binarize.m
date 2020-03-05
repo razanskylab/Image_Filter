@@ -18,6 +18,8 @@ function [binImage] = Binarize(IMF)
     level = level(1); % we take the lowest level for 'max' tresholding
   case 'adapt'
     level = adaptthresh(binImage, IMF.threshSens);
+  case 'manual' % simples threshold possible
+    level = IMF.threshLevel;
   end
 
   binImage = imbinarize(binImage, level);

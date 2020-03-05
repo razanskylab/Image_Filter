@@ -33,7 +33,8 @@ classdef Image_Filter < BaseClass
     binMethod = 'adapt'; % gray multi or adapt
     nThreshLevels = 5; % more levels = more pixels
     threshSens = 0.5;
-
+    threshLevel = 0.5; % super simple manual threshold level
+    
     % wavelet transform --------------------------------------------------------
     waveletLevels = [2:5];
 
