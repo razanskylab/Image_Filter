@@ -104,6 +104,9 @@ function [filtImage] = Apply_Image_Filter(IMF, filterType, inputIm)
     case 'gaussian'
       IMF.VPrintF('[IMF] Gaussian lowpass filter....');
       IMF.filt = imgaussfilt(IMF.filt,IMF.fsStrength,'FilterSize',IMF.fsSize);
+    case 'median'
+      IMF.VPrintF('[IMF] Median filtering....');
+      IMF.filt = medfilt2(IMF.filt,[IMF.fsSize IMF.fsSize],'symmetric');
   end
 
   IMF.filt = normalize(IMF.filt); % normalize again, then restore orig scale
