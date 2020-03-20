@@ -36,7 +36,7 @@ classdef Image_Filter < BaseClass
     threshLevel = 0.5; % super simple manual threshold level
     
     % wavelet transform --------------------------------------------------------
-    waveletLevels = [2:5];
+    waveletLevels = 2:5;
 
     % localtonemap --------------------------------------------------------------
     ltmContrast = 0.1; % [0-1] Amount of local contrast enhancement applied
@@ -68,6 +68,10 @@ classdef Image_Filter < BaseClass
     imadLimOut = [0 1];
     imadGamme = 1;
     imadAuto = 1;
+
+    % fspecial filters using size and strength/alpha/ etc
+    fsSize = 5;
+    fsStrength = 5;
 
     % Sharpen ------------------------------------------------------------------
     % Standard deviation of the Gaussian lowpass filter
@@ -278,6 +282,70 @@ classdef Image_Filter < BaseClass
         filtImage = IMF.Apply_Image_Filter('Adjust_Contrast');
       else
         IMF.Apply_Image_Filter('Adjust_Contrast');
+      end
+    end
+
+    function [filtImage] = Blur_Average(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('average');
+      else
+        IMF.Apply_Image_Filter('average');
+      end
+    end
+
+    function [filtImage] = Blur_Disk(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('disk');
+      else
+        IMF.Apply_Image_Filter('disk');
+      end
+    end
+
+    function [filtImage] = Blur_Motion(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('motion');
+      else
+        IMF.Apply_Image_Filter('motion');
+      end
+    end
+
+    function [filtImage] = Blur_Gaussian(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('gaussian');
+      else
+        IMF.Apply_Image_Filter('gaussian');
+      end
+    end
+
+    function [filtImage] = Edge_Filter_Laplacian(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('laplacian');
+      else
+        IMF.Apply_Image_Filter('laplacian');
+      end
+    end
+
+    function [filtImage] = Edge_Filter_Log(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('log');
+      else
+        IMF.Apply_Image_Filter('log');
+      end
+    end
+
+    function [filtImage] = Edge_Sobel(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('sobel');
+      else
+        IMF.Apply_Image_Filter('sobel');
+      end
+    end
+
+    function [filtImage] = Edge_Prewitt(IMF)
+      if nargout
+        filtImage = IMF.Apply_Image_Filter('prewitt');
+      else
+        IMF.Apply_Image_Filter('prewitt');
       end
     end
 
