@@ -63,15 +63,47 @@ function [filtImage] = Apply_Image_Filter(IMF, filterType, inputIm)
       % ----------------------------------------------------------------------
     case 'Adjust_Contrast'
       IMF.VPrintF('[IMF] Adjusting image intensity...');
-
+      
       if IMF.imadAuto
         inLimits = stretchlim(IMF.filt);
       else
         inLimits = IMF.imadLimIn;
       end
-
+      
       IMF.filt = imadjust(IMF.filt, inLimits, IMF.imadLimOut, IMF.imadGamme);
-
+    
+    % all below are fspecial() filters and have at most 2 input parameters
+    case 'average'
+      IMF.VPrintF('[IMF] Averaging filter...');
+      h = fspecial('average',IMF.fsSize);
+      IMF.filt = imfilter(IMF.filt,h,'replicate');
+    case 'disk' 
+      IMF.VPrintF('[IMF] Circular averaging filter (pillbox)...');
+      h = fspecial('disk',IMF.fsSize);
+      IMF.filt = imfilter(IMF.filt,h,'replicate');
+    case 'laplacian'
+      IMF.VPrintF('[IMF] Laplacian (edge) filter...');
+      h = fspecial('laplacian',IMF.fsStrength);
+      IMF.filt = imfilter(IMF.filt,h,'replicate');
+    case 'log'
+      IMF.VPrintF('[IMF] Laplacian of Gaussian filter...');
+      h = fspecial('log',IMF.fsSize,IMF.fsStrength);
+      IMF.filt = imfilter(IMF.filt,h,'replicate');
+    case 'motion'
+      IMF.VPrintF('[IMF] Motion filter...');
+      h = fspecial('motion',IMF.fsSize,IMF.fsStrength);
+      IMF.filt = imfilter(IMF.filt,h,'replicate');
+    case 'prewitt'
+      IMF.VPrintF('[IMF] Prewitt edge-emphasizing filter...');
+      h = fspecial('prewitt');
+      IMF.filt = imfilter(IMF.filt,h,'replicate');
+    case 'sobel'
+      IMF.VPrintF('[IMF] Sobel edge-emphasizing filter...');
+      h = fspecial('sobel');
+      IMF.filt = imfilter(IMF.filt,h,'replicate');
+    case 'gaussian'
+      IMF.VPrintF('[IMF] Gaussian lowpass filter....');
+      IMF.filt = imgaussfilt(IMF.filt,IMF.fsStrength,'FilterSize',IMF.fsSize);
   end
 
   IMF.filt = normalize(IMF.filt); % normalize again, then restore orig scale
@@ -83,3 +115,5 @@ function [filtImage] = Apply_Image_Filter(IMF, filterType, inputIm)
 
   IMF.Done();
 end
+
+
